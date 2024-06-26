@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 // Rodando normal no laptop
-// Rodando no PC novamente.
+// Rodando normal no PC novamente.
+// Rodando normal no laptop novamente
+// Rodando no VSCode tbm (laptop)
 void main() {
   runApp(const MyApp());
 }
