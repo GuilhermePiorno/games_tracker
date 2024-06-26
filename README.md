@@ -1,16 +1,18 @@
-# games_tracker
+# Trabalho Dispositivos Móveis
 
-A new Flutter project.
+Grupo:
+    Gabriel
+    Guilherme
+    Maurício
 
-## Getting Started
+## Enunciado
 
-This project is a starting point for a Flutter application.
+O projeto pode ser feito em grupo com até 4 pessoas. Conferir em anexo os alunos com presença suficiente para fazer o projeto.
 
-A few resources to get you started if this is your first Flutter project:
+Desenvolver o aplicativo Games Tracker, que permite o usuário cadastrar criar, listar, editar e remover games e incluir uma review do jogo. Além disso o usuário poderá pesquisar os jogos por data de lançamento, gênero e nota da review. A primeira tela do App deve mostrar a opção de logar no sistema, cadastrar novo usuário ou logar sem cadastro.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Uma vez que o usuário tenha escolhido sua opção, ele será redirecionado para tela de dashboard que deve listar os jogos cadastrados por ele (se o usuário for cadastrado) ou apresentar os últimos jogos com nota (usuário sem cadastro). A tela de dashboard deve apresentar os filtros de data de lançamento, gênero e nota da review com um botão para buscar os jogos com base nos filtros e um menu com as seguintes opções:
+- Deslogar;
+- Reviews Recentes;
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Usuários logados sem cadastros só poderão pesquisar os jogos e visualizar a review dos jogos feitas por usuários cadastrados. Usuários que possuem cadastro poderão incluir, editar e excluir jogos e incluir, editar e excluir reviews. Usuário pode incluir review de um jogo que ele não cadastrou. 
