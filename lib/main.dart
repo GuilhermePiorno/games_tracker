@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+// Rodando normal no laptop
 void main() {
   runApp(const MyApp());
 }
