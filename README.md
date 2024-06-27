@@ -1,8 +1,11 @@
 # Trabalho Dispositivos Móveis
 
 Grupo:
+
     Gabriel
+
     Guilherme
+
     Maurício
 
 ## Enunciado
@@ -16,3 +19,11 @@ Uma vez que o usuário tenha escolhido sua opção, ele será redirecionado para
 - Reviews Recentes;
 
 Usuários logados sem cadastros só poderão pesquisar os jogos e visualizar a review dos jogos feitas por usuários cadastrados. Usuários que possuem cadastro poderão incluir, editar e excluir jogos e incluir, editar e excluir reviews. Usuário pode incluir review de um jogo que ele não cadastrou. 
+
+## CLIs  úteis
+flutter pub upgrade
+flutter pub outdated
+
+start ms-settings:developers
+
+pub upgrade --major-versions
