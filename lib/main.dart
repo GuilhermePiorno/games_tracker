@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // Rodando normal no PC novamente.
 // Rodando normal no laptop novamente
 // Rodando no VSCode tbm (laptop)
-// Rodando normal
+// Rodando normal (Mauricio)
 void main() {
   runApp(const MyApp());
 }
