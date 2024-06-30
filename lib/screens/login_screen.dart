@@ -32,9 +32,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 loginController.getLogin(emailController.text, passwordController.text).then((user){
                   if(user.id != -1) {
-                    print("existe");
+                    print("Usuário existe: ${user.id} ${user.name} ${user.email} ${user.password}");
                   } else {
-                    print("não existe");
+                    print("Usuário não existe");
                   }
                 });
 
