@@ -4,7 +4,7 @@ class User {
   String? email;
   String? password;
 
-  User(this.name, this.email, this.password);
+  User(this.id, this.name, this.email, this.password);
 
   User.fromMap(Map map) {
     this.id = map["id"];
