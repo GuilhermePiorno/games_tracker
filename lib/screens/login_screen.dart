@@ -23,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _LoginScreenState() {
     this.controller = LoginController();
-    // LoginController loginController = LoginController();
   }
 
   savePref(int value, String name, String email, String pass) async {
@@ -42,13 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (form!.validate()) {
       form.save();
-
-      /*User user = User(username: _username!, password: _password!);
-
-      int id = await controller.saveUser(user);
-      print("Saved: $id");  */
-
-      //                   print("Usuário existe: ${user.id} ${user.name} ${user.email} ${user.password}");
 
       try {
         User user = await controller.getLogin(_email!, _password!);
@@ -86,23 +78,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    _email = preferences.getString("email")!;
+    _password = preferences.getString("pass")!;
     value = preferences.getInt("value");
     if (value == 1) {
       _current_user = await controller.getLogin(_email!, _password!);
     }
     setState(() {
-      // _loginStatus = value == 1? LoginStatus.signedIn : LoginStatus.notSignedin;
-
-      if (value == 1) {
-        _loginStatus = LoginStatus.signedIn;
-        // _current_user = User(
-        //   name: preferences.getString("name")!,
-        //   email: preferences.getString("email")!,
-        //   password: preferences.getString("pass")!,
-        // );
-      } else {
-        _loginStatus = LoginStatus.notSignedin;
-      }
+      _loginStatus =
+          value == 1 ? LoginStatus.signedIn : LoginStatus.notSignedin;
     });
   }
 
@@ -148,16 +132,6 @@ class _LoginScreenState extends State<LoginScreen> {
         break;
 
       case LoginStatus.signedIn:
-        /*Navigator.push(context, MaterialPageRoute(
-          builder: (context) => Home()
-        ));*/
-
-        // currentWidget = Home(signOut);
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => DashboardScreen(user: _current_user)));
-
         currentWidget = DashboardScreen(user: _current_user);
         break;
     }
@@ -165,40 +139,3 @@ class _LoginScreenState extends State<LoginScreen> {
     return currentWidget;
   }
 }
-
-  // TextEditingController emailController = TextEditingController();
-  // TextEditingController passwordController = TextEditingController();
-  // LoginController loginController = LoginController();
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('Login'),
-  //     ),
-  //     body: Center(
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //         children: [
-  //           TextField(controller: emailController, decoration: InputDecoration(labelText: "email"),),
-  //           TextField(controller: passwordController, decoration: InputDecoration(labelText: "password"),),
-  //           ElevatedButton(
-  //             onPressed: () {
-
-  //               loginController.getLogin(emailController.text, passwordController.text).then((user){
-  //                 if(user.id != -1) {
-  //                   print("Usuário existe: ${user.id} ${user.name} ${user.email} ${user.password}");
-  //                   Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen(user: user)));
-  //                 } else {
-  //                   print("Usuário não existe");
-  //                 }
-  //               });
-
-  //             }, 
-  //             child: Text("Login"))
-  //         ]
-  //       ),
-  //     ),
-  //   );
-  // }
-// }
