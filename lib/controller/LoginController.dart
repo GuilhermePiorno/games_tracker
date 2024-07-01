@@ -1,4 +1,4 @@
-import '../helper/DatabaseHelper.dart'; 
+import '../helper/DatabaseHelper.dart';
 import '../model/user.dart';
 
 class LoginController {
@@ -9,7 +9,7 @@ class LoginController {
     int res = await db.insert('user', user.toMap());
     return res;
   }
-  
+
   Future<int> deleteUser(User user) async {
     var db = await con.db;
     int res = await db.delete("user", where: "id = ?", whereArgs: [user.id]);
@@ -22,22 +22,37 @@ class LoginController {
       SELECT * FROM user WHERE email = '${email}' AND password = '${password}' 
       """;
     var res = await db.rawQuery(sql);
-   
+
     if (res.length > 0) {
       return User.fromMap(res.first);
     }
-    
-    return User(-1, "", "", "");
+
+    return User(id: -1, name: "", email: "", password: "");
+  }
+
+  Future<bool> checkRegistration(String email) async {
+    var db = await con.db;
+    String sql = """
+      SELECT * FROM user WHERE email = '${email}' 
+      """;
+
+    var res = await db.rawQuery(sql);
+
+    if (res.length > 0) {
+      return true;
+    }
+
+    return false;
   }
 
   Future<List<User>> getAllUser() async {
     var db = await con.db;
-    
+
     var res = await db.query("user");
 
-    List<User> list = res.isNotEmpty ? res.map((c) => User.fromMap(c)).toList() : [];
-        
+    List<User> list =
+        res.isNotEmpty ? res.map((c) => User.fromMap(c)).toList() : [];
+
     return list;
   }
-  
 }

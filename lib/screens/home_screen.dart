@@ -68,7 +68,10 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DashboardScreen(user: User(-1, "", "", ""),)),
+                      builder: (context) => DashboardScreen(
+                            user:
+                                User(id: -1, name: "", email: "", password: ""),
+                          )),
                 );
               },
               child: Text(

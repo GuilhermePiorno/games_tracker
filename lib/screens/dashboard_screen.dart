@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -11,24 +12,34 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
   String titulo = "";
 
   void _setTitulo() {
-    if(widget.user.id != -1) {
+    if (widget.user.id != -1) {
       titulo = "Dashboard de ${widget.user.name}";
     } else {
       titulo = "Dashboard anônimo";
     }
   }
 
+  fuckit() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      preferences.setInt("value", 0);
+    });
+  }
+
   Widget? _geraCorpo() {
     _setTitulo();
     Widget corpo;
-    if(widget.user.id != -1) { // dashboard de usuário logado
-      corpo = Text("Usuário ${widget.user.id}");
-    } else { // dashboard de usuário não logado
-      corpo = Text("Usuário anônimo");
+    if (widget.user.id != -1) {
+      // dashboard de usuário logado
+      // corpo = Text("Usuário ${widget.user.id}");
+      corpo = ElevatedButton(onPressed: fuckit, child: Text("Logout"));
+    } else {
+      // dashboard de usuário não logado
+      // corpo = Text("Usuário anônimo");
+      corpo = ElevatedButton(onPressed: fuckit, child: Text("Logout"));
     }
     return corpo;
   }
@@ -43,10 +54,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(titulo),
-      ),
-      body: _geraCorpo()
-    );
+        appBar: AppBar(
+          title: Text(titulo),
+        ),
+        body: _geraCorpo());
   }
 }

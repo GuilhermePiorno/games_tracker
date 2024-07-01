@@ -10,7 +10,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -23,26 +22,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: Text('Cadastrar Novo Usuário'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            TextField(controller: nameController, decoration: InputDecoration(labelText: "name"),),
-            TextField(controller: emailController, decoration: InputDecoration(labelText: "email"),),
-            TextField(controller: passwordController, decoration: InputDecoration(labelText: "password"),),
-            ElevatedButton(onPressed: (){
-              loginController.getLogin(emailController.text, passwordController.text).then((user){
-                if(user.id != -1) {
-                  print("Usuário já existe");
-                } else {
-                  User novoUsuario = User(null, nameController.text, emailController.text, passwordController.text);
-                  loginController.saveUser(novoUsuario);
-                  print("Usuário ${novoUsuario.name} ${novoUsuario.email} ${novoUsuario.password} cadastrado");
-                }
-              });
-            }, child: Text("cadastrar"))
-          ],
-        )
-      ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          TextField(
+            controller: nameController,
+            decoration: InputDecoration(labelText: "name"),
+          ),
+          TextField(
+            controller: emailController,
+            decoration: InputDecoration(labelText: "email"),
+          ),
+          TextField(
+            controller: passwordController,
+            decoration: InputDecoration(labelText: "password"),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                loginController
+                    .checkRegistration(emailController.text)
+                    .then((regStatus) {
+                  if (regStatus) {
+                    print("Usuário já existe");
+                  } else {
+                    User novoUsuario = User(
+                        name: nameController.text,
+                        email: emailController.text,
+                        password: passwordController.text);
+                    loginController.saveUser(novoUsuario);
+                    print(
+                        "Usuário ${novoUsuario.name} ${novoUsuario.email} ${novoUsuario.password} cadastrado");
+                  }
+                });
+              },
+              child: Text("cadastrar"))
+        ],
+      )),
     );
   }
 }
