@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:games_tracker/model/user.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
 import 'dashboard_screen.dart';
@@ -67,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DashboardScreen(registered: false)),
+                      builder: (context) => DashboardScreen(user: User(-1, "", "", ""),)),
                 );
               },
               child: Text(

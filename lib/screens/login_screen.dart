@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:games_tracker/controller/LoginController.dart';
 import 'package:games_tracker/model/user.dart';
+import 'package:games_tracker/screens/dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -33,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 loginController.getLogin(emailController.text, passwordController.text).then((user){
                   if(user.id != -1) {
                     print("Usuário existe: ${user.id} ${user.name} ${user.email} ${user.password}");
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen(user: user)));
                   } else {
                     print("Usuário não existe");
                   }
