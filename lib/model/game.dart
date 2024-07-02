@@ -1,33 +1,41 @@
+import 'dart:convert';
+
 class Game {
   
   int? id;
-  int? userId;
-  String? name;
-  DateTime? releaseDate;
-  String? description;
+  int user_id;
+  String name;
+  String release_date;
+  String description;
 
-  Game(this.userId, this.name, this.releaseDate, this.description);
+  Game({
+    this.id,
+    required this.user_id,
+    required this.name,
+    required this.release_date,
+    required this.description});
 
-  Game.fromMap(Map map) {
-    this.id = map["id"];
-    this.userId = map["user_id"];
-    this.name = map["name"];
-    this.releaseDate = map["release_date"];
-    this.description = map["description"];
-  }
-
-  Map<String, dynamic> toMap(){
-    Map<String, dynamic> map = {
-      "user_id": this.userId,
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      "id": this.id,
+      "user_id": this.user_id,
       "name": this.name,
-      "release_date": this.releaseDate.toString(),
+      "release_date": this.release_date,
       "description": this.description
     };
-    
-    if (this.id != null) {
-      map["id"] = this.id;
-    }
-    
-    return map; 
   }
+
+  factory Game.fromMap(Map<String, dynamic> map) {
+    return Game(
+        id: map["id"] ??= map["id"],
+        user_id: map["user_id"] as int,
+        name: map["name"] as String,
+        release_date: map["release_date"] as String,
+        description: map["description"] as String);
+  }
+
+  String toJson() => jsonEncode(toMap());
+
+  factory Game.fromJson(String source) =>
+      Game.fromMap(jsonDecode(source) as Map<String, dynamic>);
 }
