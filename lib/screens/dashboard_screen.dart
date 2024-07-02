@@ -17,13 +17,13 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late DashboardController controller;
   String titulo = "";
+  List<Game> gamesList = [];
 
-  _DashboardScreenState(){
+  _DashboardScreenState() {
     this.controller = DashboardController();
   }
 
-  void printgames() async{
-    
+  void printgames() async {
     //Teste getGame
     // Game agame = await controller.getGame('God of War', '2018-04-18');
     // print("user_id: ${agame.user_id}");
@@ -56,13 +56,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // Review areview = Review(user_id: 7, game_id: 1, score: 9.9, description: "meh", date: "2024-07-02");
     // controller.addReview(areview);
 
-
     //Teste getAllReviews()
     // List<Review> testreview = await controller.getAllReviews('score', 'ASC');
     // testreview.forEach((review){
     //   print("auth_id: ${review.user_id}, game_id: ${review.game_id} score: ${review.score} description: ${review.description} date: ${review.date}");
     // });
-
 
     //Teste recentReviews()
     // List<Review> testreview2 = await controller.recentReviews();
@@ -79,6 +77,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     //Teste removeReview
     // controller.removeReview(7, 1);
+  }
+
+  void _getGames() async {
+    // List games = await controller.getAllGames('release_date', 'DESC');
+
+    // for (var gameMap in games) {
+    //   Game game = Game.fromMap(gameMap);
+    //   gamesList.add(game);
+    // }
+
+    List<Game> games = await controller.getAllGames('release_date', 'DESC');
+    for (var game in games) {
+      gamesList.add(game);
+    }
+
+    setState(() {});
   }
 
   void _setTitulo() {
@@ -107,7 +121,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
     } else {
       // dashboard de usuário não logado
       // corpo = Text("Usuário anônimo");
-      corpo = ElevatedButton(onPressed: fuckit, child: Text("Logout"));
+      corpo = Center(
+          child: Column(children: [
+        Expanded(
+            child: ListView.separated(
+          padding: const EdgeInsets.all(8),
+          itemCount: gamesList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+                height: 120,
+                child: Column(children: [
+                  Text("Name: ${gamesList[index].name}"),
+                  Text("Release date: ${gamesList[index].release_date}"),
+                  Text("Description: ${gamesList[index].description}"),
+                  //TODO score e genre
+                ]));
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+        ))
+      ]));
+
+      // ElevatedButton(onPressed: fuckit, child: Text("Logout"));
     }
     return corpo;
   }
@@ -117,6 +152,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // TODO: implement initState
     super.initState();
     _setTitulo();
+    _getGames();
   }
 
   @override
@@ -125,6 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(titulo),
+          backgroundColor: Colors.blue,
         ),
         body: _geraCorpo());
   }
