@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
+import '../model/review.dart';
 import 'package:games_tracker/model/game.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -46,12 +47,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // print("Release: ${umjogo.release_date}");
 
     //Teste getAllGames()
-    // List<Game> test = await controller.getAllGames();
+    // List<Game> test = await controller.getAllGames('release_date', 'DESC');
     // test.forEach((game){
-    //   print("game numer: ${game.id}");
-    //   print("game name: ${game.name}");
+    //   print("game_id: ${game.id}, name: ${game.name}, release: ${game.release_date}, description: ${game.description}");
     // });
 
+    //Teste addReview
+    // Review areview = Review(user_id: 7, game_id: 1, score: 9.9, description: "meh", date: "2024-07-02");
+    // controller.addReview(areview);
+
+
+    //Teste getAllReviews()
+    // List<Review> testreview = await controller.getAllReviews('score', 'ASC');
+    // testreview.forEach((review){
+    //   print("auth_id: ${review.user_id}, game_id: ${review.game_id} score: ${review.score} description: ${review.description} date: ${review.date}");
+    // });
+
+
+    //Teste recentReviews()
+    // List<Review> testreview2 = await controller.recentReviews();
+    // testreview2.forEach((review){
+    //   print("auth_id: ${review.user_id}, game_id: ${review.game_id} score: ${review.score} description: ${review.description} date: ${review.date}");
+    // });
+
+    //Teste getReview
+    // Review someReview = await controller.getReview(2, 1);
+    // print("auth_id: ${someReview.user_id}, game_id: ${someReview.game_id} score: ${someReview.score} description: ${someReview.description} date: ${someReview.date}");
+
+    //Teste updateReview
+    // controller.updateReview(someReview, 4, 'They ruined the game!');
+
+    //Teste removeReview
+    // controller.removeReview(7, 1);
   }
 
   void _setTitulo() {

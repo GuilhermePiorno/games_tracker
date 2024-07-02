@@ -1,35 +1,44 @@
+import 'dart:convert';
+
 class Review {
   int? id;
-  int? userId;
-  int? gameId;
-  double? score;
-  String? description;
-  DateTime? date;
+  int user_id;
+  int game_id;
+  double score;
+  String description;
+  String date;
 
-  Review(this.userId, this.gameId, this.score, this.description, this.date);
+  Review({
+    this.id,
+    required this.user_id,
+    required this.game_id,
+    required this.score,
+    required this.description,
+    required this.date});
 
-  Review.fromMap(Map map) {
-    this.id = map["id"];
-    this.userId = map["user_id"];
-    this.gameId = map["game_id"];
-    this.score = map["score"];
-    this.description = map["description"];
-    this.date = map["date"];
-  }
-
-  Map<String, dynamic> toMap(){
-    Map<String, dynamic> map = {
-      "user_id": this.userId,
-      "game_id": this.gameId,
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      "id": this.id,
+      "user_id": this.user_id,
+      "game_id": this.game_id,
       "score": this.score,
       "description": this.description,
-      "date": this.date.toString()
+      "date": this.date
     };
-    
-    if (this.id != null) {
-      map["id"] = this.id;
-    }
-    
-    return map; 
   }
+
+  factory Review.fromMap(Map<String, dynamic> map) {
+    return Review(
+        id: map["id"] ??= map["id"],
+        user_id: map["user_id"] as int,
+        game_id: map["game_id"] as int,
+        score: map["score"] as double,
+        description: map["description"] as String,
+        date: map["date"] as String);
+  }
+
+  String toJson() => jsonEncode(toMap());
+
+  factory Review.fromJson(String source) =>
+      Review.fromMap(jsonDecode(source) as Map<String, dynamic>);
 }

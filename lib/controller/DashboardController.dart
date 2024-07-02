@@ -1,6 +1,7 @@
 import 'package:games_tracker/model/game.dart';
 import '../helper/DatabaseHelper.dart';
 import '../model/user.dart';
+import '../model/review.dart';
 
 class DashboardController{
   DatabaseHelper con = DatabaseHelper();
@@ -40,15 +41,72 @@ class DashboardController{
     return Game(id: -1, user_id: -1, name: "", release_date: '1970-01-01', description: "");
   }
 
-
-  Future<List<Game>> getAllGames() async {
+  Future<List<Game>> getAllGames([String coluna = 'name', String ordem = 'ASC']) async {
     var db = await con.db;
 
-    var res = await db.query("game");
+    String sort = coluna + ' ' + ordem;
+    var res = await db.query("game", orderBy: sort);
 
     List<Game> list =
         res.isNotEmpty ? res.map((c) => Game.fromMap(c)).toList() : [];
 
     return list;
   }
+
+  Future<int> addReview(Review review) async{
+    var db = await con.db;
+    int res = await db.insert('review', review.toMap());
+    return res;
+  }
+
+  Future<List<Review>> getAllReviews([String coluna = 'game_id', String ordem = 'ASC']) async {
+    var db = await con.db;
+    String sort = coluna + ' ' + ordem;
+    var res = await db.query("review", orderBy: sort);
+
+    List<Review> list =
+        res.isNotEmpty ? res.map((c) => Review.fromMap(c)).toList() : [];
+
+    return list;
+  }
+
+  Future<List<Review>> recentReviews() async{
+    var db = await con.db;
+    var res = await db.query("review", orderBy: "date DESC");
+    List<Review> list =
+        res.isNotEmpty ? res.map((c) => Review.fromMap(c)).toList() : [];
+
+    return list;
+  }
+
+  Future<Review> getReview(int user_id, int game_id) async {
+    var db = await con.db;
+    String sql = """
+      SELECT * FROM review WHERE user_id = '${user_id}' AND game_id = '${game_id}' 
+      """;
+    var res = await db.rawQuery(sql);
+
+    if (res.length > 0) {
+      return Review.fromMap(res.first);
+    }
+
+    return Review(user_id: -1, game_id: -1, score: -1, description: "", date: "1970-01-01");
+  }
+
+  Future<int> removeReview(int user_id, int game_id) async {
+    var db = await con.db;
+    int res = await db.delete("review", where: "user_id = ? AND game_id = ?", whereArgs: [user_id, game_id]);
+    return res;
+  }
+
+
+  Future<int> updateReview(Review review, double newscore, String newDescription, String newDate) async {
+    var db = await con.db;
+
+    int count = await db.rawUpdate(
+  'UPDATE review SET score = ?, description = ?, date WHERE user_id = ? AND game_id = ?',
+  [newscore, newDescription, newDate,review.user_id, review.game_id]);
+    return count;
+  }
+
 }
