@@ -6,7 +6,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
   static Database? _db;
-  
+
   factory DatabaseHelper() => _instance;
 
   DatabaseHelper.internal();
@@ -19,16 +19,16 @@ class DatabaseHelper {
     sqfliteFfiInit();
 
     var databaseFactory = databaseFactoryFfi;
-    final io.Directory appDocumentsDir = await getApplicationDocumentsDirectory();
+    final io.Directory appDocumentsDir =
+        await getApplicationDocumentsDirectory();
     String path = p.join(appDocumentsDir.path, "databases", "banco.db");
     //print("Database Path: $path");
 
-    Database db = await databaseFactory.openDatabase(
-      path,
-      options: OpenDatabaseOptions(
-        version: 1,
-        onCreate: (db, version) async {
-          String sql = """
+    Database db = await databaseFactory.openDatabase(path,
+        options: OpenDatabaseOptions(
+            version: 1,
+            onCreate: (db, version) async {
+              String sql = """
             CREATE TABLE user(
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               name VARCHAR NOT NULL,
@@ -96,13 +96,9 @@ class DatabaseHelper {
             INSERT INTO review(user_id, game_id, score, description, date) VALUES(4, 1, 9.6, 'Teste', '2024-06-20');  
           """;
 
-          await db.execute(sql);
-        }
-      )
-    );
+              await db.execute(sql);
+            }));
 
     return db;
   }
-
-  
 }
