@@ -1,6 +1,5 @@
 import 'package:games_tracker/model/game.dart';
 import '../helper/DatabaseHelper.dart';
-import '../model/user.dart';
 import '../model/review.dart';
 
 class DashboardController {

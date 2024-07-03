@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:games_tracker/controller/DashboardController.dart';
+import 'package:games_tracker/screens/game_details_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
-import '../model/review.dart';
 import 'package:games_tracker/model/game.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -96,11 +96,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
-  fuckit() async {
+  deslogar() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       preferences.setInt("value", 0);
     });
+    Navigator.pop(context);
+  }
+
+  ListView _geraListaDeJogos() {
+    List<ListItem> list = [];
+    ListView lv = ListView(children: list,);
+    for (var game in gamesList) {
+      ListItem li = ListItem(game: game);
+      list.add(li);
+    }
+    return lv;
   }
 
   Widget? _geraCorpo() {
@@ -110,7 +121,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (widget.user.id != -1) {
       // dashboard de usuário logado
       // corpo = Text("Usuário ${widget.user.id}");
-      corpo = ElevatedButton(onPressed: fuckit, child: Text("Logout"));
+      corpo = Column(
+        children: [
+          Expanded(
+            flex: 10,
+            child: _geraListaDeJogos()
+          ),
+          Expanded(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(onPressed: (){}, child: Text("Cadastrar jogo")),
+                ElevatedButton(onPressed: (){}, child: Text("Filtrar")),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(onPressed: (){}, child: Text("Reviews Recentes")),
+                ElevatedButton(onPressed: deslogar, child: Text("Logout")),
+              ],
+            ),
+          ),
+        ],
+      );
     } else {
       // dashboard de usuário não logado
       // corpo = Text("Usuário anônimo");
@@ -158,5 +196,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
           backgroundColor: Colors.blue,
         ),
         body: _geraCorpo());
+  }
+}
+
+class ListItem extends StatefulWidget {
+  const ListItem({super.key, required this.game});
+
+  final Game game;
+
+  @override
+  State<ListItem> createState() => _ListItemState();
+}
+
+class _ListItemState extends State<ListItem> {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Text(widget.game.name + " (Média: " + widget.game.score.toString() + ")"),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => GameDetailsScreen(game: widget.game)),
+        );
+      },
+    );
   }
 }
