@@ -80,13 +80,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void _getGames() async {
-    // List games = await controller.getAllGames('release_date', 'DESC');
-
-    // for (var gameMap in games) {
-    //   Game game = Game.fromMap(gameMap);
-    //   gamesList.add(game);
-    // }
-
     List<Game> games = await controller.getAllGames('release_date', 'DESC');
     for (var game in games) {
       gamesList.add(game);
@@ -131,10 +124,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
             return Container(
                 height: 120,
                 child: Column(children: [
-                  Text("Name: ${gamesList[index].name}"),
-                  Text("Release date: ${gamesList[index].release_date}"),
-                  Text("Description: ${gamesList[index].description}"),
-                  //TODO score e genre
+                  Text("Nome: ${gamesList[index].name}"),
+                  Text("Data de lançamento: ${gamesList[index].release_date}"),
+                  Text("Descrição: ${gamesList[index].description}"),
+                  Text("Gênero: ${gamesList[index].genre}"),
+                  //TODO score
                 ]));
           },
           separatorBuilder: (BuildContext context, int index) =>
