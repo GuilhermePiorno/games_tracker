@@ -32,11 +32,15 @@ class DashboardController {
   Future<Game> getGame(String name, String releaseDate) async {
     var db = await con.db;
     String sql = """
-      SELECT *, genre.name AS genre 
+      SELECT game.*, 
+        genre.name AS genre,
+        IFNULL(AVG(review.score), 0.0) AS score 
       FROM game 
       INNER JOIN game_genre ON game.id = game_genre.game_id
       INNER JOIN genre ON game_genre.genre_id = genre.id
+      LEFT JOIN review ON game.id = review.game_id
       WHERE name = '${name}' AND release_date = '${releaseDate}' 
+      GROUP BY game.id, game.name, game.release_date
       """;
     var res = await db.rawQuery(sql);
 
