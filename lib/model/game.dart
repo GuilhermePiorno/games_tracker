@@ -7,15 +7,16 @@ class Game {
   String release_date;
   String description;
   String genre;
+  double? score;
 
-  Game({
-    this.id,
-    required this.user_id,
-    required this.name,
-    required this.release_date,
-    required this.description,
-    required this.genre,
-  });
+  Game(
+      {this.id,
+      required this.user_id,
+      required this.name,
+      required this.release_date,
+      required this.description,
+      required this.genre,
+      this.score});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -24,7 +25,8 @@ class Game {
       "name": this.name,
       "release_date": this.release_date,
       "description": this.description,
-      "genre": this.description
+      "genre": this.genre,
+      "score": this.score
     };
   }
 
@@ -35,7 +37,8 @@ class Game {
         name: map["name"] as String,
         release_date: map["release_date"] as String,
         description: map["description"] as String,
-        genre: map["genre"] as String);
+        genre: map["genre"] as String,
+        score: map["score"] as double);
   }
 
   String toJson() => jsonEncode(toMap());

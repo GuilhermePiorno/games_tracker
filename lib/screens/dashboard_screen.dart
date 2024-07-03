@@ -122,13 +122,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
           itemCount: gamesList.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-                height: 120,
+                height: 150,
                 child: Column(children: [
                   Text("Nome: ${gamesList[index].name}"),
                   Text("Data de lançamento: ${gamesList[index].release_date}"),
                   Text("Descrição: ${gamesList[index].description}"),
                   Text("Gênero: ${gamesList[index].genre}"),
-                  //TODO score
+                  Text("Média nota: ${gamesList[index].score}")
                 ]));
           },
           separatorBuilder: (BuildContext context, int index) =>
