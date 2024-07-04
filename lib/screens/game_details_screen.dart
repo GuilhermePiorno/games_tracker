@@ -20,6 +20,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
       ),
       body: Column(
         children: [
+          Text("${widget.game.name}"),
+          Text("Data de lançamento: ${widget.game.release_date}"),
+          Text("Média nota: ${widget.game.score}"),
+          Text("Gênero: ${widget.game.genre}"),
+          Text("Descrição: ${widget.game.description}"),
           ElevatedButton(
             child: Text("Cadastrar review"), 
             onPressed: (){}
