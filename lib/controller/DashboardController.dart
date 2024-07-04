@@ -38,7 +38,7 @@ class DashboardController {
       INNER JOIN game_genre ON game.id = game_genre.game_id
       INNER JOIN genre ON game_genre.genre_id = genre.id
       LEFT JOIN review ON game.id = review.game_id
-      WHERE name = '${name}' AND release_date = '${releaseDate}' 
+      WHERE game.name = '${name}' AND game.release_date = '${releaseDate}' 
       GROUP BY game.id, game.name, game.release_date
       """;
     var res = await db.rawQuery(sql);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:games_tracker/screens/game_details_screen.dart';
+import 'package:games_tracker/screens/game_register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
 import 'package:games_tracker/model/game.dart';
@@ -25,11 +26,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void printgames() async {
     //Teste getGame
-    // Game agame = await controller.getGame('God of War', '2018-04-18');
-    // print("user_id: ${agame.user_id}");
-    // print("Name: ${agame.name}");
-    // print("Description: ${agame.description}");
-    // print("Release: ${agame.release_date}");
+     Game agame = await controller.getGame('God of War', '2018-04-18');
+     print("user_id: ${agame.user_id}");
+     print("Name: ${agame.name}");
+     print("Description: ${agame.description}");
+     print("Release: ${agame.release_date}");
 
     //Teste addgame
     // Game newgame = Game(user_id: 7, name: 'Baldurs Gate 3', description: 'Cool RPG game', release_date: '2023-08-08');
@@ -132,7 +133,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(onPressed: (){}, child: Text("Cadastrar jogo")),
+                ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => GameRegisterScreen(user: widget.user)));
+                  }, 
+                  child: Text("Cadastrar jogo")),
                 ElevatedButton(onPressed: (){}, child: Text("Filtrar")),
               ],
             ),
@@ -173,8 +180,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const Divider(),
         ))
       ]));
-
-      // ElevatedButton(onPressed: fuckit, child: Text("Logout"));
     }
     return corpo;
   }
@@ -212,7 +217,7 @@ class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(widget.game.name + " (Média: " + widget.game.score.toString() + ")"),
+      leading: Text("${widget.game.name} (Média: ${widget.game.score})"),
       onTap: () {
         Navigator.push(
           context,
