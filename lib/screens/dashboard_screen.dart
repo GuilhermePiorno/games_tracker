@@ -158,27 +158,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
     } else {
       // dashboard de usuário não logado
-      // corpo = Text("Usuário anônimo");
       corpo = Center(
           child: Column(children: [
+        Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
         Expanded(
-            child: ListView.separated(
-          padding: const EdgeInsets.all(8),
-          itemCount: gamesList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-                height: 150,
-                child: Column(children: [
-                  Text("Nome: ${gamesList[index].name}"),
-                  Text("Data de lançamento: ${gamesList[index].release_date}"),
-                  Text("Descrição: ${gamesList[index].description}"),
-                  Text("Gênero: ${gamesList[index].genre}"),
-                  Text("Média nota: ${gamesList[index].score}")
-                ]));
-          },
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-        ))
+          flex: 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(onPressed: () {}, child: Text("Reviews Recentes")),
+              ElevatedButton(onPressed: () {}, child: Text("Filtrar")),
+            ],
+          ),
+        ),
       ]));
     }
     return corpo;
