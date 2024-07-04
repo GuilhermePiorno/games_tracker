@@ -26,11 +26,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void printgames() async {
     //Teste getGame
-     Game agame = await controller.getGame('God of War', '2018-04-18');
-     print("user_id: ${agame.user_id}");
-     print("Name: ${agame.name}");
-     print("Description: ${agame.description}");
-     print("Release: ${agame.release_date}");
+    Game agame = await controller.getGame('God of War', '2018-04-18');
+    print("user_id: ${agame.user_id}");
+    print("Name: ${agame.name}");
+    print("Description: ${agame.description}");
+    print("Release: ${agame.release_date}");
 
     //Teste addgame
     // Game newgame = Game(user_id: 7, name: 'Baldurs Gate 3', description: 'Cool RPG game', release_date: '2023-08-08');
@@ -105,11 +105,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Navigator.pop(context);
   }
 
-  ListView _geraListaDeJogos() {
+  ListView _geraListaDeJogos(User user) {
     List<ListItem> list = [];
-    ListView lv = ListView(children: list,);
+
+    ListView lv = ListView(
+      children: list,
+    );
+
     for (var game in gamesList) {
-      ListItem li = ListItem(game: game);
+      ListItem li = ListItem(game: game, user: user);
       list.add(li);
     }
     return lv;
@@ -121,26 +125,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     if (widget.user.id != -1) {
       // dashboard de usuário logado
-      // corpo = Text("Usuário ${widget.user.id}");
       corpo = Column(
         children: [
-          Expanded(
-            flex: 10,
-            child: _geraListaDeJogos()
-          ),
+          Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
           Expanded(
             flex: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  onPressed: (){
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (context) => GameRegisterScreen(user: widget.user)));
-                  }, 
-                  child: Text("Cadastrar jogo")),
-                ElevatedButton(onPressed: (){}, child: Text("Filtrar")),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  GameRegisterScreen(user: widget.user)));
+                    },
+                    child: Text("Cadastrar jogo")),
+                ElevatedButton(onPressed: () {}, child: Text("Filtrar")),
               ],
             ),
           ),
@@ -149,7 +151,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(onPressed: (){}, child: Text("Reviews Recentes")),
+                ElevatedButton(
+                    onPressed: () {}, child: Text("Reviews Recentes")),
                 ElevatedButton(onPressed: deslogar, child: Text("Logout")),
               ],
             ),
@@ -197,9 +200,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 }
 
 class ListItem extends StatefulWidget {
-  const ListItem({super.key, required this.game});
+  const ListItem({super.key, required this.game, required this.user});
 
   final Game game;
+  final User user;
 
   @override
   State<ListItem> createState() => _ListItemState();
@@ -213,7 +217,9 @@ class _ListItemState extends State<ListItem> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => GameDetailsScreen(game: widget.game)),
+          MaterialPageRoute(
+              builder: (context) =>
+                  GameDetailsScreen(game: widget.game, user: widget.user)),
         );
       },
     );
