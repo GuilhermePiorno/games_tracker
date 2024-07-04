@@ -44,15 +44,69 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             .checkRegistration(emailController.text)
                             .then((regStatus) {
                           if (regStatus) {
-                            print("Usuário já existe");
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Aviso"),
+                                  content: Text("Usuário já cadastrado."),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('Ok, fechar'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else if (nameController.text.isEmpty ||
+                              emailController.text.isEmpty ||
+                              passwordController.text.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Aviso"),
+                                  content: Text(
+                                      "Não foi possível cadastrar o usuário, tente novamente."),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('Ok, fechar'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           } else {
                             User novoUsuario = User(
                                 name: nameController.text,
                                 email: emailController.text,
                                 password: passwordController.text);
                             loginController.saveUser(novoUsuario);
-                            print(
-                                "Usuário ${novoUsuario.name} ${novoUsuario.email} ${novoUsuario.password} cadastrado");
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Aviso"),
+                                  content: Text(
+                                    "Usuário ${novoUsuario.name} foi cadastrado com sucesso.",
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('Ok, fechar'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           }
                         });
                       },
