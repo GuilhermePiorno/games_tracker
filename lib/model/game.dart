@@ -25,8 +25,6 @@ class Game {
       "name": this.name,
       "release_date": this.release_date,
       "description": this.description,
-      "genre": this.genre,
-      "score": this.score
     };
   }
 
