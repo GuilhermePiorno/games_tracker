@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:games_tracker/screens/game_details_screen.dart';
 import 'package:games_tracker/screens/game_register_screen.dart';
+import 'package:games_tracker/screens/recent_reviews_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
 import 'package:games_tracker/model/game.dart';
@@ -152,7 +153,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    onPressed: () {}, child: Text("Reviews Recentes")),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RecentReviewsScreen(),
+                      ),
+                    );
+                  },
+                  child: Text("Reviews Recentes"),
+                ),
                 ElevatedButton(onPressed: deslogar, child: Text("Logout")),
               ],
             ),
@@ -169,7 +179,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              ElevatedButton(onPressed: () {}, child: Text("Reviews Recentes")),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RecentReviewsScreen(),
+                    ),
+                  );
+                },
+                child: Text("Reviews Recentes"),
+              ),
               ElevatedButton(onPressed: () {}, child: Text("Filtrar")),
             ],
           ),
