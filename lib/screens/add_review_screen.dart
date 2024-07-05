@@ -39,24 +39,49 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Adicionar review para ${widget.game.name}')),
+      appBar: AppBar(
+        title: Text(
+          'Adicionar review para ${widget.game.name}',
+          overflow: TextOverflow.visible,
+        ),
+        backgroundColor: Colors.blue,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _scoreController,
-              decoration: InputDecoration(labelText: 'Nota (0-10)'),
+              decoration: InputDecoration(
+                labelText: 'Nota:',
+                helperText: "A nota deve ser entre 0 e 10",
+                helperStyle: TextStyle(color: Colors.blueAccent),
+                filled: true,
+              ),
               keyboardType: TextInputType.number,
+              maxLength: 2,
             ),
             TextField(
               controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Descrição'),
+              decoration: InputDecoration(
+                  labelText: 'Descrição',
+                  helperText: "Máximo 5 linhas",
+                  helperStyle: TextStyle(color: Colors.blueAccent)),
+              minLines: 1,
               maxLines: 5,
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _addReview,
+              onPressed: () {
+                print(_scoreController.text);
+                if (int.parse(_scoreController.text) >= 0 &&
+                    int.parse(_scoreController.text) <= 10) {
+                  _addReview;
+                } else {
+                  const SnackBar(
+                      content: Text('A nota precisa ser entre 0 e 10'));
+                }
+              },
               child: Text('Concluir Review'),
             ),
           ],
