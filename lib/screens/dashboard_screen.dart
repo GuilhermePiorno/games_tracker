@@ -126,75 +126,88 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     if (widget.user.id != -1) {
       // dashboard de usuário logado
-      corpo = Column(
-        children: [
-          Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
-          Expanded(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  GameRegisterScreen(user: widget.user)));
-                    },
-                    child: Text("Cadastrar jogo")),
-                ElevatedButton(onPressed: () {}, child: Text("Filtrar")),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RecentReviewsScreen(),
-                      ),
-                    );
-                  },
-                  child: Text("Reviews Recentes"),
+      corpo = Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                        width: 170,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GameRegisterScreen(
+                                          user: widget.user)));
+                            },
+                            child: Text("Cadastrar jogo"))),
+                    SizedBox(
+                        width: 100,
+                        child: ElevatedButton(
+                            onPressed: () {}, child: Text("Filtrar"))),
+                  ],
                 ),
-                ElevatedButton(onPressed: deslogar, child: Text("Logout")),
-              ],
-            ),
-          ),
-        ],
-      );
+              ),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                        width: 170,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RecentReviewsScreen(),
+                              ),
+                            );
+                          },
+                          child: Text("Reviews Recentes"),
+                        )),
+                    SizedBox(
+                        width: 100,
+                        child: ElevatedButton(
+                            onPressed: deslogar, child: Text("Logout"))),
+                  ],
+                ),
+              ),
+            ],
+          ));
     } else {
       // dashboard de usuário não logado
-      corpo = Center(
+      corpo = Padding(
+          padding: EdgeInsets.all(15),
           child: Column(children: [
-        Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
-        Expanded(
-          flex: 1,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RecentReviewsScreen(),
-                    ),
-                  );
-                },
-                child: Text("Reviews Recentes"),
+            Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
+            Expanded(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RecentReviewsScreen(),
+                        ),
+                      );
+                    },
+                    child: Text("Reviews Recentes"),
+                  ),
+                  ElevatedButton(onPressed: () {}, child: Text("Filtrar")),
+                ],
               ),
-              ElevatedButton(onPressed: () {}, child: Text("Filtrar")),
-            ],
-          ),
-        ),
-      ]));
+            ),
+          ]));
     }
     return corpo;
   }
@@ -233,7 +246,8 @@ class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text("${widget.game.name} (Média: ${widget.game.score})"),
+      leading: Text("${widget.game.name} - Nota média: ${widget.game.score}",
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
       onTap: () {
         Navigator.push(
           context,
