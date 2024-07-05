@@ -14,6 +14,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   LoginController loginController = LoginController();
+  bool passwordVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordVisible = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +29,57 @@ class _RegisterScreenState extends State<RegisterScreen> {
           title: Text('Cadastrar Novo Usuário'), backgroundColor: Colors.blue),
       body: Center(
           child: Container(
-              margin: const EdgeInsets.all(10),
+              margin: const EdgeInsets.all(15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   TextField(
                     controller: nameController,
-                    decoration: InputDecoration(labelText: "name"),
+                    maxLength: 10,
+                    decoration: InputDecoration(
+                      labelText: "Nome",
+                      helperText: "Máximo de 10 caracteres",
+                      helperStyle: TextStyle(color: Colors.blueAccent),
+                      filled: true,
+                    ),
                   ),
                   TextField(
                     controller: emailController,
-                    decoration: InputDecoration(labelText: "email"),
+                    maxLength: 40,
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      helperText: "Máximo de 40 caracteres",
+                      helperStyle: TextStyle(color: Colors.blueAccent),
+                      border: UnderlineInputBorder(),
+                      filled: true,
+                    ),
                   ),
                   TextField(
+                    obscureText: passwordVisible,
                     controller: passwordController,
-                    decoration: InputDecoration(labelText: "password"),
+                    maxLength: 12,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: "Senha",
+                      helperText: "Máximo de 12 caracteres",
+                      helperStyle: TextStyle(color: Colors.blueAccent),
+                      suffixIcon: IconButton(
+                        icon: Icon(passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                        onPressed: () {
+                          setState(
+                            () {
+                              passwordVisible = !passwordVisible;
+                            },
+                          );
+                        },
+                      ),
+                      alignLabelWithHint: false,
+                      filled: true,
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
+                    textInputAction: TextInputAction.done,
                   ),
                   ElevatedButton(
                       onPressed: () {
@@ -110,7 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         });
                       },
-                      child: Text("cadastrar"))
+                      child: Text("Cadastrar"))
                 ],
               ))),
     );
