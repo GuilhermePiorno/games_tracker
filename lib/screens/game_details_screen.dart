@@ -48,7 +48,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Nome: ${widget.game.name}",
+            Text("${widget.game.name}",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             Text("Data de lançamento: ${widget.game.release_date}"),
@@ -56,7 +56,20 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
             Text("Gênero: ${widget.game.genre}"),
             Text("Descrição: ${widget.game.description}"),
             SizedBox(height: 20),
+            ElevatedButton(
+              child: Text("Editar jogo"),
+              //TODO edição de jogo
+              onPressed: () {},
+            ),
+            SizedBox(height: 15),
+            ElevatedButton(
+              child: Text("Excluir jogo"),
+              //TODO exclusao de jogo
+              onPressed: () {},
+            ),
+            SizedBox(height: 15),
             ..._mostraBtnReview(),
+            SizedBox(height: 15),
             ElevatedButton(
               child: Text("Voltar"),
               onPressed: () {
