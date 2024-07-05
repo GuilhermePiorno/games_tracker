@@ -20,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late LoginController controller;
   var value; // 0 ou 1, não logado ou logado
   late User _current_user;
+  bool passwordVisible = false;
 
   _LoginScreenState() {
     this.controller = LoginController();
@@ -43,14 +44,14 @@ class _LoginScreenState extends State<LoginScreen> {
       form.save();
 
       try {
-        User user = await controller.getLogin(_email!, _password!);
+        User user = await controller.getLogin(_email, _password);
         if (user.id != -1) {
           savePref(1, user.name, user.email, user.password);
           _current_user = user;
           _loginStatus = LoginStatus.signedIn;
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('User not registered!')),
+            const SnackBar(content: Text('Usuário não registrado!')),
           );
         }
       } catch (e) {
@@ -74,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     getPref();
+    passwordVisible = true;
   }
 
   getPref() async {
@@ -82,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _password = preferences.getString("pass")!;
     value = preferences.getInt("value");
     if (value == 1) {
-      _current_user = await controller.getLogin(_email!, _password!);
+      _current_user = await controller.getLogin(_email, _password);
     }
     setState(() {
       _loginStatus =
@@ -113,17 +115,37 @@ class _LoginScreenState extends State<LoginScreen> {
                                 TextFormField(
                                     onSaved: (newVal) => _email = newVal!,
                                     decoration: InputDecoration(
-                                        labelText: "email",
+                                        labelText: "Email",
                                         border: OutlineInputBorder())),
                                 Padding(
                                     padding:
                                         EdgeInsets.only(top: 20, bottom: 20),
                                     child: TextFormField(
-                                        onSaved: (newVal) =>
-                                            _password = newVal!,
-                                        decoration: InputDecoration(
-                                            labelText: "Password",
-                                            border: OutlineInputBorder())))
+                                      onSaved: (newVal) => _password = newVal!,
+                                      obscureText: passwordVisible,
+                                      decoration: InputDecoration(
+                                        labelText: "Senha",
+                                        border: OutlineInputBorder(),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(passwordVisible
+                                              ? Icons.visibility
+                                              : Icons.visibility_off),
+                                          onPressed: () {
+                                            setState(
+                                              () {
+                                                passwordVisible =
+                                                    !passwordVisible;
+                                              },
+                                            );
+                                          },
+                                        ),
+                                        alignLabelWithHint: false,
+                                        filled: true,
+                                      ),
+                                      keyboardType:
+                                          TextInputType.visiblePassword,
+                                      textInputAction: TextInputAction.done,
+                                    ))
                               ],
                             )),
                         ElevatedButton(onPressed: _submit, child: Text("Login"))
