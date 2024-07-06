@@ -104,9 +104,10 @@ class DashboardController {
     var db = await con.db;
 
     String sql = """
-      SELECT review.*, game.name AS game_name
+      SELECT review.*, game.name AS game_name, u.name AS user_name
       FROM review
       INNER JOIN game ON review.game_id = game.id
+      INNER JOIN `user` AS u ON review.user_id = u.id
       WHERE review.date >= ? 
       ORDER BY review.date DESC
     """;
@@ -133,6 +134,7 @@ class DashboardController {
         user_id: -1,
         game_id: -1,
         game_name: "",
+        user_name: "",
         score: -1,
         description: "",
         date: "1970-01-01");

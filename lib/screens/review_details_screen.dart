@@ -23,12 +23,11 @@ class _ReviewDetailsScreenState extends State<ReviewDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Jogo: ${widget.review.game_name}",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
+            Text("Jogo: ${widget.review.game_name}"),
             Text("Nota: ${widget.review.score}"),
             Text("Descrição: ${widget.review.description}"),
             Text("Data de criação: ${widget.review.date}"),
+            Text("Criada pelo usuário: ${widget.review.user_name}"),
             SizedBox(height: 20),
             ElevatedButton(
               child: Text("Editar review"),

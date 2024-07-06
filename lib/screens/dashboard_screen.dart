@@ -246,7 +246,7 @@ class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text("${widget.game.name} - Nota média: ${widget.game.score}",
+      leading: Text("${widget.game.name} - Média: ${widget.game.score}",
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
       onTap: () {
         Navigator.push(

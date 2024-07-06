@@ -29,6 +29,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       user_id: widget.user.id!,
       game_id: widget.game.id!,
       game_name: "nome_jogo",
+      user_name: "nome_user",
       score: score,
       description: description,
       date: date,

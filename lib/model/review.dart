@@ -5,6 +5,7 @@ class Review {
   int user_id;
   int game_id;
   String game_name;
+  String user_name;
   double score;
   String description;
   String date;
@@ -14,6 +15,7 @@ class Review {
       required this.user_id,
       required this.game_id,
       required this.game_name,
+      required this.user_name,
       required this.score,
       required this.description,
       required this.date});
@@ -35,6 +37,7 @@ class Review {
         user_id: map["user_id"] as int,
         game_id: map["game_id"] as int,
         game_name: map["game_name"] as String,
+        user_name: map["user_name"] as String,
         score: map["score"] as double,
         description: map["description"] as String,
         date: map["date"] as String);
