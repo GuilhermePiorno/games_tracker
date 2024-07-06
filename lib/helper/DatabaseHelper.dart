@@ -22,7 +22,7 @@ class DatabaseHelper {
     final io.Directory appDocumentsDir =
         await getApplicationDocumentsDirectory();
     String path = p.join(appDocumentsDir.path, "databases", "banco.db");
-    //print("Database Path: $path");
+    print("Database Path: $path");
 
     Database db = await databaseFactory.openDatabase(path,
         options: OpenDatabaseOptions(
@@ -45,12 +45,12 @@ class DatabaseHelper {
               name VARCHAR NOT NULL UNIQUE,
               description TEXT NOT NULL,
               release_date VARCHAR NOT NULL,
-              FOREIGN KEY(user_id) REFERENCES user(id));
+              FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE SET NULL);
             
             CREATE TABLE game_genre(
               game_id INTEGER NOT NULL,
               genre_id INTEGER NOT NULL,
-              FOREIGN KEY(game_id) REFERENCES game(id),
+              FOREIGN KEY(game_id) REFERENCES game(id) ON DELETE CASCADE,
               FOREIGN KEY(genre_id) REFERENCES genre(id));
 
             CREATE TABLE review(
@@ -60,8 +60,8 @@ class DatabaseHelper {
               score REAL NOT NULL,
               description TEXT,
               date VARCHAR NOT NULL,
-              FOREIGN KEY(user_id) REFERENCES user(id),
-              FOREIGN KEY(game_id) REFERENCES game(id));
+              FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE,
+              FOREIGN KEY(game_id) REFERENCES game(id) ON DELETE CASCADE);
 
             INSERT INTO user(name, email, password) VALUES('Teste 1', 'teste1@teste', '123456');
             INSERT INTO user(name, email, password) VALUES('Teste 2', 'teste2@teste', '123456');

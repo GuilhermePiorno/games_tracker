@@ -15,6 +15,7 @@ class GameRegisterScreen extends StatefulWidget {
 class _GameRegisterScreenState extends State<GameRegisterScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController genreController = TextEditingController();
   DashboardController dashboardController = DashboardController();
   DateTime? dataLancamento;
   String txtData = "";
@@ -51,6 +52,16 @@ class _GameRegisterScreenState extends State<GameRegisterScreen> {
                   ),
                   minLines: 1,
                   maxLines: 10),
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: "Gênero do jogo",
+                  helperText: "Máximo de 50 caracteres",
+                  helperStyle: TextStyle(color: Colors.blueAccent),
+                  filled: true,
+                ),
+                maxLength: 50,
+              ),    
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Text(
                   "Data de lançamento: " + txtData,
