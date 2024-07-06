@@ -82,13 +82,18 @@ class _GameRegisterScreenState extends State<GameRegisterScreen> {
                           .getGame(nameController.text,
                               "${dataLancamento!.year}-${dataLancamento!.month}-${dataLancamento!.day}")
                           .then((res) {
-                        Game game = res;
-                        if (game.id != -1) {
+                        if (res.id != -1) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Jogo já existe!')),
                           );
                         } else {
-                          dashboardController.addGame(game);
+                          Game novoJogo = Game(
+                            user_id: widget.user.id!, 
+                            name: nameController.text, 
+                            release_date: dataLancamento!.toIso8601String(), 
+                            description: descriptionController.text, 
+                            genre: "genero");
+                          dashboardController.addGame(novoJogo);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content:
