@@ -165,7 +165,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => RecentReviewsScreen(),
+                                builder: (context) =>
+                                    RecentReviewsScreen(user: widget.user),
                               ),
                             );
                           },
@@ -196,7 +197,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => RecentReviewsScreen(),
+                          builder: (context) =>
+                              RecentReviewsScreen(user: widget.user),
                         ),
                       );
                     },
