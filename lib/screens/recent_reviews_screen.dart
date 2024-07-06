@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:games_tracker/model/review.dart';
+import 'package:games_tracker/screens/review_details_screen.dart';
 
 class RecentReviewsScreen extends StatefulWidget {
   @override
@@ -40,15 +41,22 @@ class _RecentReviewsScreenState extends State<RecentReviewsScreen> {
             return Card(
               margin: EdgeInsets.symmetric(vertical: 8.0),
               child: ListTile(
-                title: Text('${review.game_name}'),
+                title: Text('Review número: ${review.id}'),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Nota: ${review.score}'),
-                    Text('Descrição: ${review.description}'),
                     Text('Data: ${review.date}'),
                   ],
                 ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ReviewDetailsScreen(review: review)),
+                  );
+                },
               ),
             );
           },
