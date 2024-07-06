@@ -99,8 +99,19 @@ class DashboardController {
   }
 
   Future<List<Review>> recentReviews() async {
+    DateTime sete_dias_atras = DateTime.now().subtract(Duration(days: 7));
+
     var db = await con.db;
-    var res = await db.query("review", orderBy: "date DESC");
+
+    String sql = """
+      SELECT review.*, game.name AS game_name
+      FROM review
+      INNER JOIN game ON review.game_id = game.id
+      WHERE review.date >= ? 
+      ORDER BY review.date DESC
+    """;
+    var res = await db.rawQuery(sql, [sete_dias_atras.toIso8601String()]);
+
     List<Review> list =
         res.isNotEmpty ? res.map((c) => Review.fromMap(c)).toList() : [];
 
@@ -121,6 +132,7 @@ class DashboardController {
     return Review(
         user_id: -1,
         game_id: -1,
+        game_name: "",
         score: -1,
         description: "",
         date: "1970-01-01");

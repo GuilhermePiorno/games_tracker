@@ -40,7 +40,7 @@ class _RecentReviewsScreenState extends State<RecentReviewsScreen> {
             return Card(
               margin: EdgeInsets.symmetric(vertical: 8.0),
               child: ListTile(
-                title: Text('Game ID: ${review.game_id}'),
+                title: Text('${review.game_name}'),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

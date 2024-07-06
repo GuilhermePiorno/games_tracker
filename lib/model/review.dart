@@ -4,17 +4,19 @@ class Review {
   int? id;
   int user_id;
   int game_id;
+  String game_name;
   double score;
   String description;
   String date;
 
-  Review({
-    this.id,
-    required this.user_id,
-    required this.game_id,
-    required this.score,
-    required this.description,
-    required this.date});
+  Review(
+      {this.id,
+      required this.user_id,
+      required this.game_id,
+      required this.game_name,
+      required this.score,
+      required this.description,
+      required this.date});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -32,6 +34,7 @@ class Review {
         id: map["id"] ??= map["id"],
         user_id: map["user_id"] as int,
         game_id: map["game_id"] as int,
+        game_name: map["game_name"] as String,
         score: map["score"] as double,
         description: map["description"] as String,
         date: map["date"] as String);
