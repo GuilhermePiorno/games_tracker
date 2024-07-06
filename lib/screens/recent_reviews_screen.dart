@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:games_tracker/model/review.dart';
+import 'package:games_tracker/model/user.dart';
 import 'package:games_tracker/screens/review_details_screen.dart';
 
 class RecentReviewsScreen extends StatefulWidget {
+  final User user;
+
+  const RecentReviewsScreen({super.key, required this.user});
+
   @override
   _RecentReviewsScreenState createState() => _RecentReviewsScreenState();
 }
@@ -53,8 +58,8 @@ class _RecentReviewsScreenState extends State<RecentReviewsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            ReviewDetailsScreen(review: review)),
+                        builder: (context) => ReviewDetailsScreen(
+                            review: review, user: widget.user)),
                   );
                 },
               ),
