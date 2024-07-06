@@ -3,6 +3,7 @@ import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:games_tracker/model/game.dart';
 import 'package:games_tracker/model/review.dart';
 import 'package:games_tracker/model/user.dart';
+import 'package:intl/intl.dart';
 
 class AddReviewScreen extends StatefulWidget {
   final Game game;
@@ -22,7 +23,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   void _addReview() async {
     double score = double.parse(_scoreController.text);
     String description = _descriptionController.text;
-    String date = DateTime.now().toIso8601String();
+    String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
     Review review = Review(
       user_id: widget.user.id!,
@@ -33,7 +34,24 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     );
 
     await _controller.addReview(review);
-    Navigator.pop(context);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Aviso"),
+          content: Text("Review cadastrada com sucesso."),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Ok, fechar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -42,7 +60,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       appBar: AppBar(
         title: Text(
           'Adicionar review para ${widget.game.name}',
-          overflow: TextOverflow.visible,
         ),
         backgroundColor: Colors.blue,
       ),
@@ -53,7 +70,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             TextField(
               controller: _scoreController,
               decoration: InputDecoration(
-                labelText: 'Nota:',
+                labelText: 'Nota',
                 helperText: "A nota deve ser entre 0 e 10",
                 helperStyle: TextStyle(color: Colors.blueAccent),
                 filled: true,
@@ -73,13 +90,27 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                print(_scoreController.text);
                 if (int.parse(_scoreController.text) >= 0 &&
                     int.parse(_scoreController.text) <= 10) {
-                  _addReview;
+                  _addReview();
                 } else {
-                  const SnackBar(
-                      content: Text('A nota precisa ser entre 0 e 10'));
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Erro"),
+                        content: Text("A nota precisa ser entre 0 e 10."),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('Ok, fechar'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
               },
               child: Text('Concluir Review'),
