@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:games_tracker/model/game.dart';
 import 'package:games_tracker/model/user.dart';
 import 'package:games_tracker/screens/add_review_screen.dart';
@@ -14,6 +15,9 @@ class GameDetailsScreen extends StatefulWidget {
 }
 
 class _GameDetailsScreenState extends State<GameDetailsScreen> {
+
+  DashboardController dashboardController = DashboardController();
+
   List<Widget> _mostraBtnReview() {
     List<Widget> lista = [];
 
@@ -29,6 +33,38 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                     AddReviewScreen(game: widget.game, user: widget.user),
               ),
             );
+          },
+        ),
+      );
+    }
+    return lista;
+  }
+
+  List<Widget> _mostraBtnExcluir() {
+    List<Widget> lista = [];
+
+    if (widget.user.id != -1) {
+      lista.add(
+        ElevatedButton(
+          child: Text("Excluir jogo"),
+          onPressed: () {
+            dashboardController.removeGame(widget.game.name, widget.game.release_date);
+          },
+        ),
+      );
+    }
+    return lista;
+  }
+
+  List<Widget> _mostraBtnEditar() {
+    List<Widget> lista = [];
+
+    if (widget.user.id != -1) {
+      lista.add(
+        ElevatedButton(
+          child: Text("Editar jogo"),
+          onPressed: () {
+            
           },
         ),
       );
@@ -56,19 +92,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
             Text("Gênero: ${widget.game.genre}"),
             Text("Descrição: ${widget.game.description}"),
             SizedBox(height: 20),
-            ElevatedButton(
-              child: Text("Editar jogo"),
-              //TODO edição de jogo
-              onPressed: () {},
-            ),
-            SizedBox(height: 15),
-            ElevatedButton(
-              child: Text("Excluir jogo"),
-              //TODO exclusao de jogo
-              onPressed: () {},
-            ),
-            SizedBox(height: 15),
             ..._mostraBtnReview(),
+            SizedBox(height: 15),
+            ..._mostraBtnEditar(),
+            SizedBox(height: 15),
+            ..._mostraBtnExcluir(),
             SizedBox(height: 15),
             ElevatedButton(
               child: Text("Voltar"),

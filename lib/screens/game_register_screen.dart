@@ -53,7 +53,7 @@ class _GameRegisterScreenState extends State<GameRegisterScreen> {
                   minLines: 1,
                   maxLines: 10),
               TextField(
-                controller: nameController,
+                controller: genreController,
                 decoration: InputDecoration(
                   labelText: "Gênero do jogo",
                   helperText: "Máximo de 50 caracteres",
