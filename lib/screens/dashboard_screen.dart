@@ -27,11 +27,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void printgames() async {
     //Teste getGame
-    Game agame = await controller.getGame('God of War', '2018-04-18');
-    print("user_id: ${agame.user_id}");
-    print("Name: ${agame.name}");
-    print("Description: ${agame.description}");
-    print("Release: ${agame.release_date}");
+    //Game agame = await controller.getGame('God of War', '2018-04-18');
+    //print("user_id: ${agame.user_id}");
+    //print("Name: ${agame.name}");
+    //print("Description: ${agame.description}");
+    //print("Release: ${agame.release_date}");
 
     //Teste addgame
     // Game newgame = Game(user_id: 7, name: 'Baldurs Gate 3', description: 'Cool RPG game', release_date: '2023-08-08');
@@ -81,13 +81,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // controller.removeReview(7, 1);
   }
 
-  void _getGames() async {
+  void _preencheGames() async {
     List<Game> games = await controller.getAllGames('release_date', 'DESC');
-    for (var game in games) {
-      gamesList.add(game);
-    }
-
-    setState(() {});
+    setState(() {
+      gamesList = games;
+    });
   }
 
   void _setTitulo() {
@@ -122,6 +120,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget? _geraCorpo() {
     _setTitulo();
+    _preencheGames();
     Widget corpo;
 
     if (widget.user.id != -1) {
@@ -217,7 +216,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // TODO: implement initState
     super.initState();
     _setTitulo();
-    _getGames();
   }
 
   @override
@@ -250,11 +248,13 @@ class _ListItemState extends State<ListItem> {
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
       onTap: () {
         Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  GameDetailsScreen(game: widget.game, user: widget.user)),
-        );
+          context, 
+          MaterialPageRoute(builder: (_) => GameDetailsScreen(game: widget.game, user: widget.user))).then((_) {
+            // This block runs when you have come back to the 1st Page from 2nd.
+            setState(() {
+              // Call setState to refresh the page.
+            });
+        });
       },
     );
   }
