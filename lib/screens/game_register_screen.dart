@@ -101,9 +101,9 @@ class _GameRegisterScreenState extends State<GameRegisterScreen> {
                           Game novoJogo = Game(
                             user_id: widget.user.id!, 
                             name: nameController.text, 
-                            release_date: dataLancamento!.toIso8601String(), 
+                            release_date: dataLancamento!.toIso8601String().substring(0, 11), 
                             description: descriptionController.text, 
-                            genre: "genero");
+                            genre: genreController.text);
                           dashboardController.addGame(novoJogo);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
