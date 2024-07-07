@@ -143,7 +143,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => GameRegisterScreen(
-                                          user: widget.user)));
+                                          user: widget.user))).then((_) {
+                                            _preencheGames();
+                                          });
                             },
                             child: Text("Cadastrar jogo"))),
                     SizedBox(
