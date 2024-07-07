@@ -1,4 +1,5 @@
 import 'package:games_tracker/model/game.dart';
+import 'package:games_tracker/model/genre.dart';
 import '../helper/DatabaseHelper.dart';
 import '../model/review.dart';
 
@@ -8,7 +9,28 @@ class DashboardController {
   Future<int> addGame(Game game) async {
     var db = await con.db;
     int res = await db.insert('game', game.toMap());
+    if (res == -1) return res;
+
+    Genre? genre = await getGenreByName(game.genre);
+    if(genre == null) {
+          int genreId = await db.insert('genre', {"name": game.genre}); // se gênero não existe, cadastra o gênero
+          String sql1 = ''' INSERT INTO game_genre(game_id, genre_id) VALUES($res, $genreId)'''; // insere na tabela que relaciona jogos e gêneros
+          await db.rawQuery(sql1);
+    } else {
+          String sql2 = ''' INSERT INTO game_genre(game_id, genre_id) VALUES($res, ${genre.id})''';
+          await db.rawQuery(sql2);
+    }
     return res;
+  }
+
+  Future<Genre?> getGenreByName(String genreName) async {
+    var db = await con.db;
+    String sql = ''' SELECT * FROM genre WHERE genre.name LIKE '${genreName}' ''';
+    var res = await db.rawQuery(sql);
+
+    Genre? genre = res.isNotEmpty ? Genre.fromMap(res.first) : null;
+
+    return genre;
   }
 
   Future<int> removeGame(String name, String releaseDate) async {
