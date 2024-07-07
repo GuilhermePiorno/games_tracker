@@ -47,8 +47,14 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
       lista.add(
         ElevatedButton(
           child: Text("Excluir jogo"),
-          onPressed: () {
-            dashboardController.removeGame(widget.game.name, widget.game.release_date);
+          onPressed: () async {
+            int res = await dashboardController.removeGame(widget.game.name, widget.game.release_date);
+            if (res > 0) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Jogo removido com sucesso!")),
+              );
+            }
           },
         ),
       );
