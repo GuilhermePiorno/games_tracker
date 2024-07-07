@@ -33,6 +33,17 @@ class DashboardController {
     return genre;
   }
 
+  Future<bool> userIsTheOwnerOfGame(int userId, int gameId) async {
+      var db = await con.db;
+      String sql = ''' SELECT * FROM game WHERE game.id = '${gameId}' AND game.user_id = '${userId}' ''';
+      var res = await db.rawQuery(sql);
+      if(res.isEmpty) {
+        return false;
+      } else {
+        return true;
+      }
+  }
+
   Future<int> removeGame(String name, String releaseDate) async {
     var db = await con.db;
     int res = await db.delete("game",

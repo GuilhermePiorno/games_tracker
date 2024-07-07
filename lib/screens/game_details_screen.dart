@@ -17,7 +17,8 @@ class GameDetailsScreen extends StatefulWidget {
 class _GameDetailsScreenState extends State<GameDetailsScreen> {
 
   DashboardController dashboardController = DashboardController();
-
+  bool _isOwner = false;
+  
   List<Widget> _mostraBtnReview() {
     List<Widget> lista = [];
 
@@ -42,8 +43,12 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
 
   List<Widget> _mostraBtnExcluir() {
     List<Widget> lista = [];
-
-    if (widget.user.id != -1) {
+    dashboardController.userIsTheOwnerOfGame(widget.user.id!, widget.game.id!).then((res) {
+      setState(() {
+        _isOwner = res;
+      });
+    });
+    if (_isOwner) {
       lista.add(
         ElevatedButton(
           child: Text("Excluir jogo"),
