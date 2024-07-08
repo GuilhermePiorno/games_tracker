@@ -143,9 +143,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => GameRegisterScreen(
-                                          user: widget.user))).then((_) {
-                                            _preencheGames();
-                                          });
+                                          user: widget.user))).then(
+                                  (createdSuccess) {
+                                _preencheGames();
+                                if (createdSuccess != null && createdSuccess) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Novo jogo cadastrado com sucesso!'),
+                                    ),
+                                  );
+                                }
+                              });
                             },
                             child: Text("Cadastrar jogo"))),
                     SizedBox(
@@ -252,12 +261,14 @@ class _ListItemState extends State<ListItem> {
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
       onTap: () {
         Navigator.push(
-          context, 
-          MaterialPageRoute(builder: (_) => GameDetailsScreen(game: widget.game, user: widget.user))).then((_) {
-            // This block runs when you have come back to the 1st Page from 2nd.
-            setState(() {
-              // Call setState to refresh the page.
-            });
+            context,
+            MaterialPageRoute(
+                builder: (_) => GameDetailsScreen(
+                    game: widget.game, user: widget.user))).then((_) {
+          // This block runs when you have come back to the 1st Page from 2nd.
+          setState(() {
+            // Call setState to refresh the page.
+          });
         });
       },
     );

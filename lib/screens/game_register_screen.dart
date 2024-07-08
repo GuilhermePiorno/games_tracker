@@ -107,11 +107,7 @@ class _GameRegisterScreenState extends State<GameRegisterScreen> {
                               description: descriptionController.text,
                               genre: genreController.text);
                           dashboardController.addGame(novoJogo);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content:
-                                    Text('Novo jogo cadastrado com sucesso!')),
-                          );
+                          Navigator.pop(context, true);
                         }
                       });
                     } else {
