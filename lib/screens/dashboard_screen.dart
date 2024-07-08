@@ -3,6 +3,7 @@ import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:games_tracker/screens/game_details_screen.dart';
 import 'package:games_tracker/screens/game_register_screen.dart';
 import 'package:games_tracker/screens/recent_reviews_screen.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
 import 'package:games_tracker/model/game.dart';
@@ -226,7 +227,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _setTitulo();
   }
@@ -257,7 +257,8 @@ class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text("${widget.game.name} - Média: ${widget.game.score}",
+      leading: Text(
+          "${widget.game.name} - Média: ${NumberFormat("#,##0.00", "pt_BR").format(widget.game.score)}",
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
       onTap: () {
         Navigator.push(
@@ -265,10 +266,7 @@ class _ListItemState extends State<ListItem> {
             MaterialPageRoute(
                 builder: (_) => GameDetailsScreen(
                     game: widget.game, user: widget.user))).then((_) {
-          // This block runs when you have come back to the 1st Page from 2nd.
-          setState(() {
-            // Call setState to refresh the page.
-          });
+          setState(() {});
         });
       },
     );
