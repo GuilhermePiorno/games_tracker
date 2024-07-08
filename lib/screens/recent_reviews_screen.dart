@@ -60,7 +60,16 @@ class _RecentReviewsScreenState extends State<RecentReviewsScreen> {
                     MaterialPageRoute(
                         builder: (context) => ReviewDetailsScreen(
                             review: review, user: widget.user)),
-                  );
+                  ).then((deletedSucess) {
+                    if (deletedSucess != null && deletedSucess) {
+                      _fetchRecentReviews();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Review excluída com sucesso'),
+                        ),
+                      );
+                    }
+                  });
                 },
               ),
             );

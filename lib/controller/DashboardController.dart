@@ -12,20 +12,24 @@ class DashboardController {
     if (res == -1) return res;
 
     Genre? genre = await getGenreByName(game.genre);
-    if(genre == null) {
-          int genreId = await db.insert('genre', {"name": game.genre}); // se gênero não existe, cadastra o gênero
-          String sql1 = ''' INSERT INTO game_genre(game_id, genre_id) VALUES($res, $genreId)'''; // insere na tabela que relaciona jogos e gêneros
-          await db.rawQuery(sql1);
+    if (genre == null) {
+      int genreId = await db.insert('genre',
+          {"name": game.genre}); // se gênero não existe, cadastra o gênero
+      String sql1 =
+          ''' INSERT INTO game_genre(game_id, genre_id) VALUES($res, $genreId)'''; // insere na tabela que relaciona jogos e gêneros
+      await db.rawQuery(sql1);
     } else {
-          String sql2 = ''' INSERT INTO game_genre(game_id, genre_id) VALUES($res, ${genre.id})''';
-          await db.rawQuery(sql2);
+      String sql2 =
+          ''' INSERT INTO game_genre(game_id, genre_id) VALUES($res, ${genre.id})''';
+      await db.rawQuery(sql2);
     }
     return res;
   }
 
   Future<Genre?> getGenreByName(String genreName) async {
     var db = await con.db;
-    String sql = ''' SELECT * FROM genre WHERE genre.name LIKE '${genreName}' ''';
+    String sql =
+        ''' SELECT * FROM genre WHERE genre.name LIKE '${genreName}' ''';
     var res = await db.rawQuery(sql);
 
     Genre? genre = res.isNotEmpty ? Genre.fromMap(res.first) : null;
@@ -34,14 +38,15 @@ class DashboardController {
   }
 
   Future<bool> userIsTheOwnerOfGame(int userId, int gameId) async {
-      var db = await con.db;
-      String sql = ''' SELECT * FROM game WHERE game.id = '${gameId}' AND game.user_id = '${userId}' ''';
-      var res = await db.rawQuery(sql);
-      if(res.isEmpty) {
-        return false;
-      } else {
-        return true;
-      }
+    var db = await con.db;
+    String sql =
+        ''' SELECT * FROM game WHERE game.id = '${gameId}' AND game.user_id = '${userId}' ''';
+    var res = await db.rawQuery(sql);
+    if (res.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   Future<int> removeGame(String name, String releaseDate) async {
@@ -173,10 +178,9 @@ class DashboardController {
         date: "1970-01-01");
   }
 
-  Future<int> removeReview(int user_id, int game_id) async {
+  Future<int> removeReview(int? reviewId) async {
     var db = await con.db;
-    int res = await db.delete("review",
-        where: "user_id = ? AND game_id = ?", whereArgs: [user_id, game_id]);
+    int res = await db.delete("review", where: "id = ?", whereArgs: [reviewId]);
     return res;
   }
 
