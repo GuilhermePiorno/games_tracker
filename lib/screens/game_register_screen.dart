@@ -61,7 +61,7 @@ class _GameRegisterScreenState extends State<GameRegisterScreen> {
                   filled: true,
                 ),
                 maxLength: 50,
-              ),    
+              ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Text(
                   "Data de lançamento: " + txtData,
@@ -99,11 +99,13 @@ class _GameRegisterScreenState extends State<GameRegisterScreen> {
                           );
                         } else {
                           Game novoJogo = Game(
-                            user_id: widget.user.id!, 
-                            name: nameController.text, 
-                            release_date: dataLancamento!.toIso8601String().substring(0, 11), 
-                            description: descriptionController.text, 
-                            genre: genreController.text);
+                              user_id: widget.user.id!,
+                              name: nameController.text,
+                              release_date: dataLancamento!
+                                  .toIso8601String()
+                                  .split('T')[0],
+                              description: descriptionController.text,
+                              genre: genreController.text);
                           dashboardController.addGame(novoJogo);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
