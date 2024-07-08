@@ -15,10 +15,9 @@ class GameDetailsScreen extends StatefulWidget {
 }
 
 class _GameDetailsScreenState extends State<GameDetailsScreen> {
-
   DashboardController dashboardController = DashboardController();
   bool _isOwner = false;
-  
+
   List<Widget> _mostraBtnReview() {
     List<Widget> lista = [];
 
@@ -33,7 +32,16 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 builder: (context) =>
                     AddReviewScreen(game: widget.game, user: widget.user),
               ),
-            );
+            ).then((createdSuccess) {
+              if (createdSuccess != null && createdSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Review criada com sucesso!'),
+                  ),
+                );
+              }
+            });
+            ;
           },
         ),
       );
@@ -43,7 +51,9 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
 
   List<Widget> _mostraBtnExcluir() {
     List<Widget> lista = [];
-    dashboardController.userIsTheOwnerOfGame(widget.user.id!, widget.game.id!).then((res) {
+    dashboardController
+        .userIsTheOwnerOfGame(widget.user.id!, widget.game.id!)
+        .then((res) {
       setState(() {
         _isOwner = res;
       });
@@ -53,11 +63,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         ElevatedButton(
           child: Text("Excluir jogo"),
           onPressed: () async {
-            int res = await dashboardController.removeGame(widget.game.name, widget.game.release_date);
+            int res = await dashboardController.removeGame(
+                widget.game.name, widget.game.release_date);
             if (res > 0) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Jogo removido com sucesso!")),
+                const SnackBar(content: Text("Jogo removido com sucesso!")),
               );
             }
           },
@@ -74,9 +84,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
       lista.add(
         ElevatedButton(
           child: Text("Editar jogo"),
-          onPressed: () {
-            
-          },
+          onPressed: () {},
         ),
       );
     }

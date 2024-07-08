@@ -37,23 +37,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
 
     await _controller.addReview(review);
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Aviso"),
-          content: Text("Review cadastrada com sucesso."),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Ok, fechar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    Navigator.pop(context, true);
   }
 
   @override
