@@ -184,13 +184,13 @@ class DashboardController {
     return res;
   }
 
-  Future<int> updateReview(Review review, double newscore,
-      String newDescription, String newDate) async {
+  Future<int> updateReview(
+      Review review, double newScore, String newDescription) async {
     var db = await con.db;
 
     int count = await db.rawUpdate(
-        'UPDATE review SET score = ?, description = ?, date WHERE user_id = ? AND game_id = ?',
-        [newscore, newDescription, newDate, review.user_id, review.game_id]);
+        'UPDATE review SET score = ?, description = ? WHERE user_id = ? AND game_id = ?',
+        [newScore, newDescription, review.user_id, review.game_id]);
     return count;
   }
 }

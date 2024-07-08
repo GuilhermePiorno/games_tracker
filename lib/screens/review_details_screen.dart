@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:games_tracker/model/review.dart';
 import 'package:games_tracker/model/user.dart';
+import 'package:games_tracker/screens/edit_review_screen.dart';
 
 class ReviewDetailsScreen extends StatefulWidget {
   final Review review;
@@ -21,11 +22,28 @@ class _ReviewDetailsScreenState extends State<ReviewDetailsScreen> {
     List<Widget> lista = [];
 
     if (widget.user.id == widget.review.user_id) {
-      lista.add(ElevatedButton(
-        child: Text("Editar review"),
-        //TODO edição de review
-        onPressed: () {},
-      ));
+      lista.add(
+        ElevatedButton(
+          child: Text("Editar review"),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      EditReviewScreen(review: widget.review)),
+            ).then((editedSuccess) {
+              if (editedSuccess != null && editedSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Review editada com sucesso!'),
+                  ),
+                );
+              }
+            });
+            ;
+          },
+        ),
+      );
     }
 
     return lista;
