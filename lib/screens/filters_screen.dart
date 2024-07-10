@@ -19,7 +19,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Filtrar jogos e reviews"),
+        title: Text("Buscar jogos"),
         backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
