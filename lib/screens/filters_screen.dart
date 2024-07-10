@@ -26,89 +26,58 @@ class _FiltersScreenState extends State<FiltersScreen> {
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: exibir todos os jogos
-                  },
-                  child: Text("Exibir todos os jogos"),
+              TextField(
+                controller: genreController,
+                decoration: InputDecoration(
+                  labelText: "Gênero",
+                  helperText: "Filtrar jogo por gênero",
+                  helperStyle: TextStyle(color: Colors.blueAccent),
+                  filled: true,
                 ),
               ),
-              SizedBox(height: 20),
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: exibir todas as reviews
-                  },
-                  child: Text("Exibir todas as reviews"),
-                ),
-              ),
-              SizedBox(height: 30),
-              Column(
-                children: [
-                  TextField(
-                    controller: genreController,
-                    decoration: InputDecoration(
-                      labelText: "Gênero",
-                      helperText: "Filtrar jogo por gênero",
-                      helperStyle: TextStyle(color: Colors.blueAccent),
-                      filled: true,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: filtrar por gênero
-                    },
-                    child: Text("Buscar"),
-                  ),
-                  SizedBox(height: 15),
-                  TextField(
-                    controller: dateController,
-                    decoration: InputDecoration(
-                      labelText: "Data",
-                      helperText: "Filtrar jogo por data de lançamento",
-                      helperStyle: TextStyle(color: Colors.blueAccent),
-                      filled: true,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: filtrar por data
-                    },
-                    child: Text("Buscar"),
-                  ),
-                  SizedBox(height: 15),
-                  TextField(
-                    controller: scoreController,
-                    decoration: InputDecoration(
-                      labelText: "Nota",
-                      helperText: "Filtrar jogo por média da nota",
-                      helperStyle: TextStyle(color: Colors.blueAccent),
-                      filled: true,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      // TODO: filtrar por nota
-                    },
-                    child: Text("Buscar"),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  // TODO: filtrar por gênero
                 },
-                child: Text("Voltar"),
+                child: Text("Buscar"),
               ),
+              SizedBox(height: 15),
+              TextField(
+                controller: dateController,
+                decoration: InputDecoration(
+                  labelText: "Data",
+                  helperText: "Filtrar jogo por data de lançamento",
+                  helperStyle: TextStyle(color: Colors.blueAccent),
+                  filled: true,
+                ),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  // TODO: filtrar por data
+                },
+                child: Text("Buscar"),
+              ),
+              SizedBox(height: 15),
+              TextField(
+                controller: scoreController,
+                decoration: InputDecoration(
+                  labelText: "Nota",
+                  helperText: "Filtrar jogo por média da nota",
+                  helperStyle: TextStyle(color: Colors.blueAccent),
+                  filled: true,
+                ),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  // TODO: filtrar por nota
+                },
+                child: Text("Buscar"),
+              ),
+              SizedBox(height: 20),
             ],
           ),
         ),
