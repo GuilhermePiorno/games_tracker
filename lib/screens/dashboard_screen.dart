@@ -50,8 +50,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // print("Description: ${umjogo.description}");
     // print("Release: ${umjogo.release_date}");
 
-    //Teste getAllGames()
-    // List<Game> test = await controller.getAllGames('release_date', 'DESC');
+    //Teste getAllGamesWithScore()
+    // List<Game> test = await controller.getAllGamesWithScore('release_date', 'DESC');
     // test.forEach((game){
     //   print("game_id: ${game.id}, name: ${game.name}, release: ${game.release_date}, description: ${game.description}");
     // });
@@ -83,8 +83,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // controller.removeReview(7, 1);
   }
 
-  void _preencheGames() async {
-    List<Game> games = await controller.getAllGames('release_date', 'DESC');
+  void _preencheGamesNaoLogado() async {
+    List<Game> games =
+        await controller.getAllGamesWithScore('release_date', 'DESC');
+    setState(() {
+      gamesList = games;
+    });
+  }
+
+  void _preencheGamesLogado() async {
+    List<Game> games = await controller.getAllGamesByUser(
+        'release_date', 'DESC', widget.user.id);
     setState(() {
       gamesList = games;
     });
@@ -122,11 +131,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget? _geraCorpo() {
     _setTitulo();
-    _preencheGames();
     Widget corpo;
 
     if (widget.user.id != -1) {
+      print(widget.user.id);
       // dashboard de usuário logado
+      _preencheGamesLogado();
       corpo = Padding(
           padding: EdgeInsets.all(15),
           child: Column(
@@ -147,7 +157,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       builder: (context) => GameRegisterScreen(
                                           user: widget.user))).then(
                                   (createdSuccess) {
-                                _preencheGames();
+                                _preencheGamesLogado();
                                 if (createdSuccess != null && createdSuccess) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -205,6 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ));
     } else {
       // dashboard de usuário não logado
+      _preencheGamesNaoLogado();
       corpo = Padding(
           padding: EdgeInsets.all(15),
           child: Column(children: [

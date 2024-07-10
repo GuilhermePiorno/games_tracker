@@ -36,7 +36,7 @@ class Game {
         release_date: map["release_date"] as String,
         description: map["description"] as String,
         genre: map["genre"] as String,
-        score: map["score"] as double);
+        score: map['score'] ?? 0.0);
   }
 
   String toJson() => jsonEncode(toMap());
