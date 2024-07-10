@@ -4,6 +4,7 @@ import 'package:games_tracker/model/game.dart';
 import 'package:games_tracker/model/user.dart';
 import 'package:games_tracker/screens/add_review_screen.dart';
 import 'package:games_tracker/screens/edit_game_screen.dart';
+import 'package:intl/intl.dart';
 
 class GameDetailsScreen extends StatefulWidget {
   final Game game;
@@ -130,7 +131,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             Text("Data de lançamento: ${widget.game.release_date}"),
-            Text("Média nota: ${widget.game.score}"),
+            Text(
+                "Média nota: ${NumberFormat("#,##0.00", "pt_BR").format(widget.game.score)}"),
             Text("Gênero: ${widget.game.genre}"),
             Text("Descrição: ${widget.game.description}"),
             SizedBox(height: 20),
