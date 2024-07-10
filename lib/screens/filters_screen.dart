@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:games_tracker/screens/filtered_games_screen.dart';
 import '../model/user.dart';
 
 class FiltersScreen extends StatefulWidget {
@@ -39,7 +40,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
               SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: filtrar por gênero
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FilteredGamesScreen(
+                            user: widget.user, genre: genreController.text)),
+                  );
                 },
                 child: Text("Buscar"),
               ),

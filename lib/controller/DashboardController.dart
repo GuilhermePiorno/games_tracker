@@ -144,6 +144,31 @@ class DashboardController {
     return list;
   }
 
+  Future<List<Game>> getAllGamesByGenre([
+    String coluna = 'name',
+    String ordem = 'ASC',
+    String? genre,
+  ]) async {
+    var db = await con.db;
+
+    String sort = coluna + ' ' + ordem;
+    String sql = """
+    SELECT game.*, genre.name AS genre     
+    FROM game 
+    INNER JOIN game_genre ON game.id = game_genre.game_id
+    INNER JOIN genre ON game_genre.genre_id = genre.id
+    WHERE genre.name = '$genre'
+    ORDER BY $sort
+    """;
+
+    var res = await db.rawQuery(sql);
+
+    List<Game> list =
+        res.isNotEmpty ? res.map((c) => Game.fromMap(c)).toList() : [];
+
+    return list;
+  }
+
   Future<int> addReview(Review review) async {
     var db = await con.db;
     int res = await db.insert('review', review.toMap());
