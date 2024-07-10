@@ -15,6 +15,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
   TextEditingController genreController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController scoreController = TextEditingController();
+  DateTime? dataLancamento;
+  String txtData = "";
 
   @override
   Widget build(BuildContext context) {
@@ -44,25 +46,50 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => FilteredGamesScreen(
-                            user: widget.user, genre: genreController.text)),
+                            user: widget.user,
+                            opcao: "genero",
+                            genre: genreController.text,
+                            data: "")),
                   );
                 },
                 child: Text("Buscar"),
               ),
               SizedBox(height: 15),
-              TextField(
-                controller: dateController,
-                decoration: InputDecoration(
-                  labelText: "Data",
-                  helperText: "Filtrar jogo por data de lançamento",
-                  helperStyle: TextStyle(color: Colors.blueAccent),
-                  filled: true,
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                Text(
+                  "Data de lançamento: " + txtData,
+                  style: TextStyle(fontSize: 16),
                 ),
-              ),
-              SizedBox(height: 10),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  child: Text("Escolha"),
+                  onPressed: () async {
+                    dataLancamento = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime.parse("1970-01-01"),
+                        lastDate: DateTime.now());
+                    if (dataLancamento != null) {
+                      setState(() {
+                        txtData =
+                            "${dataLancamento!.day}/${dataLancamento!.month}/${dataLancamento!.year}";
+                      });
+                    }
+                  },
+                )
+              ]),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: filtrar por data
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FilteredGamesScreen(
+                            user: widget.user,
+                            opcao: "data",
+                            genre: "",
+                            data: dataLancamento!
+                                .toIso8601String()
+                                .split('T')[0])),
+                  );
                 },
                 child: Text("Buscar"),
               ),

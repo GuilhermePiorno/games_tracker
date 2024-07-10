@@ -7,10 +7,16 @@ import 'package:games_tracker/model/game.dart';
 
 class FilteredGamesScreen extends StatefulWidget {
   final User user;
+  final String opcao;
   final String genre;
+  final String data;
 
   const FilteredGamesScreen(
-      {super.key, required this.user, required this.genre});
+      {super.key,
+      required this.user,
+      required this.opcao,
+      required this.genre,
+      required this.data});
 
   @override
   State<FilteredGamesScreen> createState() => _FilteredGamesScreenState();
@@ -24,9 +30,17 @@ class _FilteredGamesScreenState extends State<FilteredGamesScreen> {
     this.controller = DashboardController();
   }
 
-  void _preencheGames() async {
+  void _preencheGamesPorGenero() async {
     List<Game> games = await controller.getAllGamesByGenre(
         'release_date', 'DESC', widget.genre);
+    setState(() {
+      gamesList = games;
+    });
+  }
+
+  void _preencheGamesPorData() async {
+    List<Game> games =
+        await controller.getAllGamesByDate('name', 'DESC', widget.data);
     setState(() {
       gamesList = games;
     });
@@ -47,23 +61,43 @@ class _FilteredGamesScreenState extends State<FilteredGamesScreen> {
   }
 
   Widget? _geraCorpo() {
-    Widget corpo;
+    Widget? corpo;
 
-    _preencheGames();
-    corpo = Padding(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
-            SizedBox(height: 15),
-            ElevatedButton(
-              child: Text("Voltar"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ));
+    if (widget.opcao == "genero") {
+      _preencheGamesPorGenero();
+      corpo = Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
+              SizedBox(height: 15),
+              ElevatedButton(
+                child: Text("Voltar"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ));
+    } else if (widget.opcao == "data") {
+      _preencheGamesPorData();
+      corpo = Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
+              SizedBox(height: 15),
+              ElevatedButton(
+                child: Text("Voltar"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ));
+    }
 
     return corpo;
   }
