@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:games_tracker/controller/DashboardController.dart';
+import 'package:games_tracker/screens/filters_screen.dart';
 import 'package:games_tracker/screens/game_details_screen.dart';
 import 'package:games_tracker/screens/game_register_screen.dart';
 import 'package:games_tracker/screens/recent_reviews_screen.dart';
@@ -161,7 +162,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     SizedBox(
                         width: 100,
                         child: ElevatedButton(
-                            onPressed: () {}, child: Text("Filtrar"))),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      FiltersScreen(user: widget.user),
+                                ),
+                              );
+                            },
+                            child: Text("Filtrar"))),
                   ],
                 ),
               ),
@@ -216,7 +226,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     },
                     child: Text("Reviews Recentes"),
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text("Filtrar")),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                FiltersScreen(user: widget.user),
+                          ),
+                        );
+                      },
+                      child: Text("Filtrar")),
                 ],
               ),
             ),
