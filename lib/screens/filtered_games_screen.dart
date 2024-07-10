@@ -10,13 +10,15 @@ class FilteredGamesScreen extends StatefulWidget {
   final String opcao;
   final String genre;
   final String data;
+  final double nota;
 
   const FilteredGamesScreen(
       {super.key,
       required this.user,
       required this.opcao,
       required this.genre,
-      required this.data});
+      required this.data,
+      required this.nota});
 
   @override
   State<FilteredGamesScreen> createState() => _FilteredGamesScreenState();
@@ -41,6 +43,14 @@ class _FilteredGamesScreenState extends State<FilteredGamesScreen> {
   void _preencheGamesPorData() async {
     List<Game> games =
         await controller.getAllGamesByDate('name', 'DESC', widget.data);
+    setState(() {
+      gamesList = games;
+    });
+  }
+
+  void _preencheGamesPorNota() async {
+    List<Game> games =
+        await controller.getAllGamesByScore('name', 'DESC', widget.nota);
     setState(() {
       gamesList = games;
     });
@@ -97,6 +107,23 @@ class _FilteredGamesScreenState extends State<FilteredGamesScreen> {
               ),
             ],
           ));
+    } else if (widget.opcao == "nota") {
+      _preencheGamesPorNota();
+      corpo = Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Expanded(flex: 10, child: _geraListaDeJogos(widget.user)),
+              SizedBox(height: 15),
+              ElevatedButton(
+                child: Text("Voltar"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ));
     }
 
     return corpo;
@@ -106,7 +133,7 @@ class _FilteredGamesScreenState extends State<FilteredGamesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("titulo"),
+        title: Text("Lista de jogos filtrados"),
         backgroundColor: Colors.blue,
       ),
       body: _geraCorpo(),

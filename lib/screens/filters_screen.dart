@@ -13,7 +13,6 @@ class FiltersScreen extends StatefulWidget {
 
 class _FiltersScreenState extends State<FiltersScreen> {
   TextEditingController genreController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
   TextEditingController scoreController = TextEditingController();
   DateTime? dataLancamento;
   String txtData = "";
@@ -49,7 +48,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                             user: widget.user,
                             opcao: "genero",
                             genre: genreController.text,
-                            data: "")),
+                            data: "",
+                            nota: 0.0)),
                   );
                 },
                 child: Text("Buscar"),
@@ -86,27 +86,36 @@ class _FiltersScreenState extends State<FiltersScreen> {
                             user: widget.user,
                             opcao: "data",
                             genre: "",
-                            data: dataLancamento!
-                                .toIso8601String()
-                                .split('T')[0])),
+                            data:
+                                dataLancamento!.toIso8601String().split('T')[0],
+                            nota: 0.0)),
                   );
                 },
                 child: Text("Buscar"),
               ),
               SizedBox(height: 15),
               TextField(
-                controller: scoreController,
-                decoration: InputDecoration(
-                  labelText: "Nota",
-                  helperText: "Filtrar jogo por média da nota",
-                  helperStyle: TextStyle(color: Colors.blueAccent),
-                  filled: true,
-                ),
-              ),
+                  controller: scoreController,
+                  decoration: InputDecoration(
+                    labelText: "Nota",
+                    helperText: "Filtrar jogo por média da nota",
+                    helperStyle: TextStyle(color: Colors.blueAccent),
+                    filled: true,
+                  ),
+                  maxLength: 4),
               SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: filtrar por nota
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FilteredGamesScreen(
+                            user: widget.user,
+                            opcao: "nota",
+                            genre: "",
+                            data: "",
+                            nota: double.parse(scoreController.text))),
+                  );
                 },
                 child: Text("Buscar"),
               ),
