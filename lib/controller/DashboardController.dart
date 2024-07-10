@@ -108,6 +108,7 @@ class DashboardController {
       INNER JOIN genre ON game_genre.genre_id = genre.id
       LEFT JOIN review ON game.id = review.game_id
       GROUP BY game.id, game.name, game.release_date
+      HAVING score > 0.0
       ORDER BY $sort
       """;
     var res = await db.rawQuery(sql);
