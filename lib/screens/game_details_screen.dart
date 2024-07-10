@@ -3,6 +3,7 @@ import 'package:games_tracker/controller/DashboardController.dart';
 import 'package:games_tracker/model/game.dart';
 import 'package:games_tracker/model/user.dart';
 import 'package:games_tracker/screens/add_review_screen.dart';
+import 'package:games_tracker/screens/edit_game_screen.dart';
 
 class GameDetailsScreen extends StatefulWidget {
   final Game game;
@@ -41,7 +42,6 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 );
               }
             });
-            ;
           },
         ),
       );
@@ -80,11 +80,34 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   List<Widget> _mostraBtnEditar() {
     List<Widget> lista = [];
 
-    if (widget.user.id != -1) {
+    dashboardController
+        .userIsTheOwnerOfGame(widget.user.id!, widget.game.id!)
+        .then((res) {
+      setState(() {
+        _isOwner = res;
+      });
+    });
+
+    if (_isOwner) {
       lista.add(
         ElevatedButton(
           child: Text("Editar jogo"),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditGameScreen(game: widget.game),
+              ),
+            ).then((editedSuccess) {
+              if (editedSuccess != null && editedSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Jogo editado com sucesso!'),
+                  ),
+                );
+              }
+            });
+          },
         ),
       );
     }
